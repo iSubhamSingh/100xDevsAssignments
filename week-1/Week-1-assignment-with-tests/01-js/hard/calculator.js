@@ -17,6 +17,22 @@
   - `npm run test-calculator`
 */
 
-class Calculator {}
+class Calculator {
+
+  Calculator(){
+    let result = 0;
+  }
+
+   add(num){
+    this.result += num;
+    return this.result;
+  }
+
+
+
+}  
+
+let obj = new Calculator() 
+console.log(obj.add(5));
 
 module.exports = Calculator;
