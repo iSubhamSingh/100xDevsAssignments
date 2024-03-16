@@ -47,6 +47,24 @@ const app = express();
 app.use(bodyParser.json());
 
 let todos = [];
+let id = 0;
+
+app.get('/todos', (req, res)=>{
+  res.send(todos)
+})
+
+app.get('/todos/:id', (req, res)=>{
+  const id = req.params.id;
+  const todo = todos.find(todo => todo.id == id);
+  if(todo){
+    res.send(todo)
+  }else{
+    res.status(404).send("Todo not found")
+  }
+})
+
+
+
  
   
 module.exports = app;
