@@ -63,6 +63,12 @@ app.get('/todos/:id', (req, res)=>{
   }
 })
 
+app.post('/todos', (req, res)=>{
+  const todo = req.body;
+  todo.id = ++id;
+  todos.push(todo);
+  res.status(201).send(todo)
+})
 
 
  
