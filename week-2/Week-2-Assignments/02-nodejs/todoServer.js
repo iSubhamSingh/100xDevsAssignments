@@ -70,6 +70,18 @@ app.post('/todos', (req, res)=>{
   res.status(201).send(todo)
 })
 
+app.put('/todos/:id', (req, res)=>{
+  const id = req.params.id;
+  const todo = todos.find(todo => todo.id == id);
+  if(todo){
+    todo.title = req.body.title;
+    todo.completed = req.body.completed;
+    res.send(todo)
+  }else{
+    res.status(404).send("Todo not found")
+  }
+})
+
 
  
   
