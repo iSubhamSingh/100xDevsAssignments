@@ -82,7 +82,16 @@ app.put('/todos/:id', (req, res)=>{
   }
 })
 
-
+app.delete('/todos/:id', (req, res)=>{
+  const id = req.params.id;
+  const todo = todos.find(todo => todo.id == id);
+  if(todo){
+    todos = todos.filter(todo => todo.id != id);
+    res.send(todo)
+  }else{
+    res.status(404).send("Todo not found")
+  }
+})
  
   
 module.exports = app;
