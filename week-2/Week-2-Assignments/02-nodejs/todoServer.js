@@ -92,6 +92,12 @@ app.delete('/todos/:id', (req, res)=>{
     res.status(404).send("Todo not found")
   }
 })
- 
+
+app.get('*', (req, res)=>{
+  res.status(404).send("Route not found")
+})
+
+
+  
   
 module.exports = app;
