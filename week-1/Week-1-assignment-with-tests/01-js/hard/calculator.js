@@ -19,7 +19,7 @@
 
 class Calculator {
 
-  Calculator(){
+  Calculator(){ 
     let result = 0;
   }
 
