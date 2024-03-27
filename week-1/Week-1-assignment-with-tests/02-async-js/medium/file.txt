@@ -1,0 +1,1 @@
+So this is the file from which we are going to remove extra spaces.
