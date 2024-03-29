@@ -39,65 +39,79 @@
 
   Testing the server - run `npm run test-todoServer` command in terminal
  */
-const express = require('express');
-const bodyParser = require('body-parser');
 
+const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
 
 app.use(bodyParser.json());
 
-let todos = [];
-let id = 0;
+let todo = [];
 
-app.get('/todos', (req, res)=>{
-  res.send(todos)
+app.get("/todos", (req,res) =>{
+  res.json(todo)
 })
 
-app.get('/todos/:id', (req, res)=>{
-  const id = req.params.id;
-  const todo = todos.find(todo => todo.id == id);
-  if(todo){
-    res.send(todo)
-  }else{
-    res.status(404).send("Todo not found")
+function find(index){
+  for(let i = 0; i< todo.length; i++){
+    if(todo[i].id == index){
+      return todo[i];
+    }
+  }
+  return -1;
+}
+
+app.get("/todos/:id", (req,res) =>{
+  let index = req.params.id;
+  if(find(index) == -1){
+    res.status(400).send("Not found");
+  }
+  else{
+    res.json(find(index));
   }
 })
 
-app.post('/todos', (req, res)=>{
-  const todo = req.body;
-  todo.id = ++id;
-  todos.push(todo);
-  res.status(201).send(todo)
+app.post("/todos", (req,res) =>{
+  todo.push(req.body);
+  res.status(201).json(req.body);
 })
 
-app.put('/todos/:id', (req, res)=>{
-  const id = req.params.id;
-  const todo = todos.find(todo => todo.id == id);
-  if(todo){
-    todo.title = req.body.title;
-    todo.completed = req.body.completed;
-    res.send(todo)
-  }else{
-    res.status(404).send("Todo not found")
+function update(index,req){
+  for(let i = 0; i < todo.length; i++){
+    if(todo[i].id == index){
+      todo[i] = req.body;
+      return 1;
+    }
+  }
+  return -1;
+
+}
+
+app.put("/todos/:id", (req,res) => {
+  let index = req.params.id;
+  if(update(index,req) == 1){
+    res.sendStatus(200);
+  }
+  else{
+    res.status(404).send("Not found");
   }
 })
 
-app.delete('/todos/:id', (req, res)=>{
-  const id = req.params.id;
-  const todo = todos.find(todo => todo.id == id);
-  if(todo){
-    todos = todos.filter(todo => todo.id != id);
-    res.send(todo)
-  }else{
-    res.status(404).send("Todo not found")
+
+app.delete("/todos/:id", (req,res) => {
+  let index = req.params.id;
+  for(let i = 0; i < todo.length; i++){
+    if(todo[i].id == index){
+      todo.splice(i,1);
+      res.sendStatus(200);
+    }
   }
+  res.status(404).send("Not found");
 })
 
-app.get('*', (req, res)=>{
-  res.status(404).send("Route not found")
+app.listen(3000, ()=>{
+  console.log("listening on 3000");
 })
 
 
-  
-  
 module.exports = app;
