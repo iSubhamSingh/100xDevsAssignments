@@ -3,4 +3,14 @@
 */
 
 function wait(n) {
+
+    return new Promise(function(resolve) {
+        setTimeout(resolve, n * 1000);
+    }); 
+
+
 }
+
+wait(1).then(function() {
+    console.log('Print after 1 second');
+}   )
