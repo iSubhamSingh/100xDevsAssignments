@@ -9,11 +9,22 @@ let COURSES = [];
 
 // Admin routes
 app.post('/admin/signup', (req, res) => {
+
   // logic to sign up admin
+  const check = ADMINS.find(iterator => iterator.username === req.body.username);
+  if(check){
+    res.status(403).json({ message : "Admin already exists"});
+  }
+  else{
+    ADMINS.push(req.body);
+    res.json({message : "Admin created successfully"});
+  }
 });
 
+console.log(ADMINS);
 app.post('/admin/login', (req, res) => {
   // logic to log in admin
+
 });
 
 app.post('/admin/courses', (req, res) => {
