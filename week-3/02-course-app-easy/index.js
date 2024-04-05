@@ -9,7 +9,7 @@ let COURSES = [];
 
 // Admin routes
 app.post('/admin/signup', (req, res) => {
-
+ 
   // logic to sign up admin
   const check = ADMINS.find(iterator => iterator.username === req.body.username);
   if(check){
@@ -21,31 +21,84 @@ app.post('/admin/signup', (req, res) => {
   }
 });
 
-console.log(ADMINS);
-app.post('/admin/login', (req, res) => {
+let adminAuthenticate = (req,res,next) => {
+  const {username, password} = req.headers;
+  let admin = ADMINS.find(i => i.username === username && i.password === password);
+  if(admin){
+    next();
+  }
+  else{
+    res.status(403).json({message : "Admin authentication failed"});
+  }
+}
+
+
+app.post('/admin/login', adminAuthenticate, (req, res) => {
   // logic to log in admin
-
+  res.json({message : "Logged in successfully"});
 });
 
-app.post('/admin/courses', (req, res) => {
+app.post('/admin/courses', adminAuthenticate, (req, res) => {
   // logic to create a course
+  const course = req.body;
+  course.id = Date.now();
+  COURSES.push(course);
+  res.json({message : "Course created successfully", courseId : course.id});
 });
 
-app.put('/admin/courses/:courseId', (req, res) => {
+app.put('/admin/courses/:courseId', adminAuthenticate, (req, res) => {
   // logic to edit a course
+  let courseId = parseInt(req.params.courseId);
+  let course = COURSES.find(c => c.id === courseId);
+  if(course){
+    Object.assign(course,req.body);
+    res.json({message : "Course updated successfully"});
+  }
+  else{
+    res.status(404).json({message : "Course not found"});
+  }
+
 });
 
-app.get('/admin/courses', (req, res) => {
+app.get('/admin/courses', adminAuthenticate, (req, res) => {
   // logic to get all courses
+  res.json({courses : COURSES});
+
 });
 
 // User routes
+
+let userAuthenticate = (req,res,next) => {
+  const {username, password} = req.headers;
+  let user = USERS.find(i => i.username === username && i.password === password);
+  if(user){
+    next();
+  }
+  else{
+    res.status(403).json({message : "User authentication failed"});
+  }
+}
+
 app.post('/users/signup', (req, res) => {
   // logic to sign up user
+  let userGet = USERS.find(i => i.username === req.body.username )
+  if(userGet){
+    res.status(403).json({message : "User already exists"});
+  }
+  else{
+    let user = {
+      username : req.body.username,
+      password : req.body.password,
+      purchasedCourses : []
+    }
+    USERS.push(user);
+    res.json({message : "User created successfully"});
+  }
 });
 
-app.post('/users/login', (req, res) => {
+app.post('/users/login', userAuthenticate, (req, res) => {
   // logic to log in user
+  res.json({message : "Logged in successfully"});
 });
 
 app.get('/users/courses', (req, res) => {
