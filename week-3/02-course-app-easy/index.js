@@ -72,6 +72,7 @@ let userAuthenticate = (req,res,next) => {
   const {username, password} = req.headers;
   let user = USERS.find(i => i.username === username && i.password === password);
   if(user){
+    req.user = user; 
     next();
   }
   else{
@@ -101,12 +102,14 @@ app.post('/users/login', userAuthenticate, (req, res) => {
   res.json({message : "Logged in successfully"});
 });
 
-app.get('/users/courses', (req, res) => {
+app.get('/users/courses', userAuthenticate,(req, res) => {
   // logic to list all courses
+  res.json({courses : COURSES.filter(c => c.published)});
 });
 
 app.post('/users/courses/:courseId', (req, res) => {
   // logic to purchase a course
+  
 });
 
 app.get('/users/purchasedCourses', (req, res) => {
