@@ -19,20 +19,50 @@
 
 class Calculator {
 
-  Calculator(){ 
-    let result = 0;
+  
+  constructor(){ 
+    this.result = 0;
   }
 
    add(num){
     this.result += num;
+  }
+
+  subtract(num){
+    this.result -= num;
+  }
+
+  multiply(num){
+    this.result *= num;
+  }
+
+  divide(num){
+    this.result /= num;
+  }
+
+  clear(){
+    this.result = 0;
+  }
+
+  getResult(){
     return this.result;
   }
 
-
+  calculate(expression){
+    let spaceLess = expression.replace(/\s+/g, '');
+    let parsedExp = spaceLess.match(/\d+|\+|\-|\*|\/|\(|\)/g);
+    // parsedExp.forEach(element => {
+      
+    //   console.log(element);
+    // });
+    console.log(parsedExp);
+  }
 
 }  
 
 let obj = new Calculator() 
-console.log(obj.add(5));
+obj.add(10);
+console.log(obj.getResult());
+console.log(obj.calculate('10 +   2 *    (   6 - (4 + 1) / 2) + 7'));
 
-module.exports = Calculator;
+// module.exports = Calculator;
