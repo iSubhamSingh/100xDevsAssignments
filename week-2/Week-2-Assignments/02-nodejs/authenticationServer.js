@@ -32,6 +32,79 @@
 const express = require("express")
 const PORT = 3000;
 const app = express();
+const bodyParser = require("body-parser");
 // write your logic here, DONT WRITE app.listen(3000) when you're running tests, the tests will automatically start the server
+
+app.use(bodyParser.json());
+let users = [];
+
+app.post("/signup", (req,res) => {
+
+  console.log(req.body.username);
+  for(let i = 0; i < users.length; i++){
+    if(users[i].email === req.body.email){
+      res.sendStatus(400);
+      
+      return;
+    }
+  }
+
+  let newUser = {
+    id : Math.floor(Math.random() * 1000) + 1,
+    username : req.body.username,
+    email : req.body.email,
+    password : req.body.password,
+    firstname : req.body.firstname,
+    lastname : req.body.lastname
+  }
+
+  users.push(newUser);
+  console.log(users);
+  res.status(201).send("Signup successful")
+
+})
+
+app.post("/login", (req,res) => {
+  for(let i = 0; i < users.length; i++){
+    if(users[i].email === req.body.email && users[i].password === req.body.password){
+
+      res.status(200).json({
+        email: users[i].email,
+        firstname: users[i].firstname,
+        lastname: users[i].lastname,
+        username: users[i].username
+      })
+      
+      return;
+    }
+  }
+
+  res.sendStatus(401);
+})
+
+app.get("/data", (req, res) => {
+  for(let i = 0; i < users.length; i++){
+    if(users[i].email === req.headers.email && users[i].password === req.headers.password){
+
+      res.status(200).json({
+        firstname: users[i].firstname,
+        lastname: users[i].lastname,
+        username: users[i].username
+      })
+      
+      return;
+    }
+  }
+
+  res.sendStatus(401);
+})
+
+app.get("/*", (req,res) => {
+  res.sendStatus(404);
+})
+
+// app.listen(3000, () => {
+//   console.log("Listening on 3000");
+// })
 
 module.exports = app;
