@@ -47,6 +47,7 @@ app.post('/todos', (req, res) => {
     title: req.body.title,
     description: req.body.description
   };
+
   fs.readFile("todos.json", "utf8", (err, data) => {
     if (err) throw err;
     const todos = JSON.parse(data);
@@ -103,4 +104,7 @@ app.use((req, res, next) => {
   res.status(404).send();
 });
 
-module.exports = app;
+app.listen(3000, () => {
+  console.log("Listening on 3000");
+})
+// module.exports = app;

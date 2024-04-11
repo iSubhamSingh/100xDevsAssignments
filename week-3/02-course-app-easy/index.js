@@ -84,7 +84,7 @@ app.post('/users/signup', (req, res) => {
   // logic to sign up user
   let userGet = USERS.find(i => i.username === req.body.username )
   if(userGet){
-    res.status(403).json({message : "User already exists"});
+    res.status(403).json({message : "User already dexists"});
   }
   else{
     let user = {

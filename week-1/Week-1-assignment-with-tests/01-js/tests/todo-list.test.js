@@ -18,8 +18,7 @@ describe('Todo', () => {
 			'Task 3',
 		]);
 	});
-
-	test('remove', () => {
+test('remove', () => {
 		todoList.add('Task 1');
 		todoList.add('Task 2');
 		todoList.add('Task 3');

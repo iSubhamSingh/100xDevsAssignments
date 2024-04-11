@@ -12,7 +12,9 @@
 */
 
 class Todo {
-  constructor() {
+
+   
+  constructor(todos = []) {
     this.todos = [];
   }
 
@@ -41,8 +43,7 @@ class Todo {
   getAll() {
     return this.todos;
   }
- 
-  get(indexOfTodo) {
+   get(indexOfTodo) {
     if (indexOfTodo >= 0 && indexOfTodo < this.todos.length) {
       return this.todos[indexOfTodo];
     } else {
@@ -57,7 +58,7 @@ class Todo {
 }
 
  
-const todoList = new Todo();
+ todoList = new Todo( ) ;
 todoList.add('Prepare presentation')
 todoList.add('Get groceries')
 console.log(todoList.getAll());
