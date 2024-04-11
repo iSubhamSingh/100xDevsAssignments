@@ -64,6 +64,19 @@ app.get('/admin/courses', adminAuthenticate, (req, res) => {
   // logic to get all courses
   res.json({courses : COURSES});
 
+  let publishedCourses = COURSES.filter(c => c.published);
+  res.json({courses : publishedCourses});
+
+  let unpublishedCourses = COURSES.filter(c => !c.published);
+  res.json({courses : unpublishedCourses});
+
+  let courseId = parseInt(req.params.courseId);
+    let course = COURSES.find(c => c.id === courseId);
+    if(course){
+      res.json({course : course});
+    }
+   
+
 });
 
 // User routes
