@@ -14,3 +14,7 @@ function wait(n) {
 wait(1).then(function() {
     console.log('Print after 1 second');
 })
+
+wait(2).then(function() {
+    console.log("prints after 2 seconds");
+})
