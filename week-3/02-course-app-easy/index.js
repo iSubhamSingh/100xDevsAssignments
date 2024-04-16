@@ -92,7 +92,7 @@ app.post('/users/signup', (req, res) => {
     let user = {
       username : req.body.username,
       password : req.body.password,
-      purchasedCourses : []
+      purchasedCourses : []  
     }
     USERS.push(user);
     res.json({message : "User created successfully"});
@@ -111,13 +111,17 @@ app.get('/users/courses', userAuthenticate,(req, res) => {
 
 app.post('/users/courses/:courseId', (req, res) => {
   // logic to purchase a course
-
+  let courseId = parseInt(req.params.courseId);
+  let course = COURSES.find(c => c.id === courseId);
+  
 
 
 });
 
 app.get('/users/purchasedCourses', (req, res) => {
   // logic to view purchased courses
+  res.json({purchasedCourses : req.user.purchasedCourses});
+
 });
 
 app.listen(3000, () => {
