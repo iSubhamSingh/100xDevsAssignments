@@ -114,8 +114,10 @@ app.post('/users/courses/:courseId', (req, res) => {
   let courseId = parseInt(req.params.courseId);
   let course = COURSES.find(c => c.id === courseId);
   
-
-
+  if(course){
+    req.user.purchasedCourses.push(course);
+    res.json({message : "Course purchased successfully"});
+  }
 });
 
 app.get('/users/purchasedCourses', (req, res) => {
