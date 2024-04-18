@@ -107,6 +107,8 @@ app.post('/users/login', userAuthenticate, (req, res) => {
 app.get('/users/courses', userAuthenticate,(req, res) => {
   // logic to list all courses
   res.json({courses : COURSES.filter(c => c.published)});
+  
+
 });
 
 app.post('/users/courses/:courseId', (req, res) => {
@@ -118,11 +120,15 @@ app.post('/users/courses/:courseId', (req, res) => {
     req.user.purchasedCourses.push(course);
     res.json({message : "Course purchased successfully"});
   }
+
+
+
 });
 
 app.get('/users/purchasedCourses', (req, res) => {
   // logic to view purchased courses
   res.json({purchasedCourses : req.user.purchasedCourses});
+
 
 });
 
