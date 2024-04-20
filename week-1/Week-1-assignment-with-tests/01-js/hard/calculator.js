@@ -51,10 +51,7 @@ class Calculator {
   calculate(expression){
     let spaceLess = expression.replace(/\s+/g, '');
     let parsedExp = spaceLess.match(/\d+|\+|\-|\*|\/|\(|\)/g);
-    // parsedExp.forEach(element => {
-      
-    //   console.log(element);
-    // });
+   
     console.log(parsedExp);
   }
 
@@ -64,5 +61,5 @@ let obj = new Calculator()
 obj.add(10);
 console.log(obj.getResult());
 console.log(obj.calculate('10 +   2 *    (   6 - (4 + 1) / 2) + 7'));
-
+console.log(obj.calculate('5 * (9 + 8)/ 10'));
 // module.exports = Calculator;
