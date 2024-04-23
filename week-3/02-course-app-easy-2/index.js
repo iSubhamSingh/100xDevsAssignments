@@ -10,6 +10,11 @@ let COURSES = [];
 // Admin routes
 app.post('/admin/signup', (req, res) => {
   // logic to sign up admin
+
+    ADMINS.push(req.body);
+    res.status(201).send(req.body);
+    
+
 });
 
 app.post('/admin/login', (req, res) => {
