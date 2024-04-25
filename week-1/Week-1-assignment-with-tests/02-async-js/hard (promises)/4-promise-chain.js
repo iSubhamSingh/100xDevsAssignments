@@ -15,6 +15,11 @@ function waitOneSecond() {
 
 function waitTwoSecond() {
 
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve();
+        }, 2000);
+    });
 }
 
 function waitThreeSecond() {
