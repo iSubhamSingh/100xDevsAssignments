@@ -33,4 +33,13 @@ function waitThreeSecond() {
 
 function calculateTime() {
 
+    let startTime = new Date();
+
+    waitOneSecond()
+        .then(() => waitTwoSecond())
+        .then(() => waitThreeSecond())
+        .then(() => {
+            let endTime = new Date();
+            console.log(endTime - startTime);
+        });
 }
