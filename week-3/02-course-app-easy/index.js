@@ -64,11 +64,14 @@ app.get('/admin/courses', adminAuthenticate, (req, res) => {
   // logic to get all courses
   res.json({courses : COURSES});
 
+  
 
 
 });
 
 // User routes
+
+
 
 let userAuthenticate = (req,res,next) => {
   const {username, password} = req.headers;
